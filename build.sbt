@@ -10,7 +10,6 @@ val compilerOptions = Seq(
   "-Yno-adapted-args",
   "-Ywarn-dead-code",
   "-Ywarn-numeric-widen",
-  "-Ywarn-unused-import",
   "-Xfuture"
 )
 
@@ -19,7 +18,12 @@ val iterateeVersion = "0.13.0"
 val previousCirceIterateeVersion = "0.8.0"
 
 val baseSettings = Seq(
-  scalacOptions ++= compilerOptions,
+  scalacOptions ++= compilerOptions ++ (
+    CrossVersion.partialVersion(scalaVersion.value) match {
+      case Some((2, p)) if p >= 11 => Seq("-Ywarn-unused-import")
+      case _ => Nil
+    }
+  ),
   scalacOptions in (Compile, console) ~= {
     _.filterNot(Set("-Ywarn-unused-import"))
   },
