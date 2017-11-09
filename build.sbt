@@ -15,7 +15,8 @@ val compilerOptions = Seq(
 )
 
 val circeVersion = "0.9.0-M1"
-val previousCirceStreamingVersion = "0.8.0"
+val iterateeVersion = "0.13.0"
+val previousCirceIterateeVersion = "0.8.0"
 
 val baseSettings = Seq(
   scalacOptions ++= compilerOptions,
@@ -34,13 +35,13 @@ val allSettings = baseSettings ++ publishSettings
 
 val docMappingsApiDir = settingKey[String]("Subdirectory in site target directory for API docs")
 
-val streaming = project.in(file("."))
+val iteratee = project.in(file("."))
 .settings(allSettings)
 .settings(
-  moduleName := "circe-streaming",
-  mimaPreviousArtifacts := Set("io.circe" %% "circe-streaming" % previousCirceStreamingVersion),
+  moduleName := "circe-iteratee",
+  mimaPreviousArtifacts := Set("io.circe" %% "circe-iteratee" % previousCirceIterateeVersion),
   libraryDependencies ++= Seq(
-    "io.iteratee" %% "iteratee-core" % "0.13.0",
+    "io.iteratee" %% "iteratee-core" % iterateeVersion,
     "io.circe" %% "circe-jawn" % circeVersion,
     "io.circe" %% "circe-testing" % circeVersion % "test"
   ),
@@ -52,7 +53,7 @@ val streaming = project.in(file("."))
 lazy val publishSettings = Seq(
   releaseCrossBuild := true,
   releasePublishArtifactsAction := PgpKeys.publishSigned.value,
-  homepage := Some(url("https://github.com/circe/circe-streaming")),
+  homepage := Some(url("https://github.com/circe/circe-iteratee")),
   licenses := Seq("Apache 2.0" -> url("http://www.apache.org/licenses/LICENSE-2.0")),
   publishMavenStyle := true,
   publishArtifact in Test := false,
@@ -66,12 +67,12 @@ lazy val publishSettings = Seq(
   },
   /* Someday maybe Scaladoc will actually work on package object-only projects.
   autoAPIMappings := true,
-  apiURL := Some(url("https://circe.github.io/circe-streaming/api/")),
+  apiURL := Some(url("https://circe.github.io/circe-iteratee/api/")),
   */
   scmInfo := Some(
     ScmInfo(
-      url("https://github.com/circe/circe-streaming"),
-      "scm:git:git@github.com:circe/circe-streaming.git"
+      url("https://github.com/circe/circe-iteratee"),
+      "scm:git:git@github.com:circe/circe-iteratee.git"
     )
   ),
   developers := List(
