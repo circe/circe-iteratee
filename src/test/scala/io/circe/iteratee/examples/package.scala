@@ -1,4 +1,4 @@
-package io.circe.streaming
+package io.circe.iteratee
 
 import cats._
 import cats.implicits._

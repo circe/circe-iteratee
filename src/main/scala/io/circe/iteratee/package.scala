@@ -5,7 +5,7 @@ import cats.{ ApplicativeError, MonadError }
 import io.circe.jawn.CirceSupportParser
 import io.iteratee.{ Enumeratee, Enumerator }
 
-package object streaming {
+package object iteratee {
 
   /**
     * String parser of JSON values wrapped in a single array

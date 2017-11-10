@@ -1,10 +1,10 @@
-package io.circe.streaming
+package io.circe.iteratee
 
 import _root_.jawn.AsyncParser
 import cats.Eval
 import cats.data.EitherT
 import io.circe._
-import io.circe.streaming.examples.Foo
+import io.circe.iteratee.examples.Foo
 import io.circe.syntax._
 import io.iteratee.{Enumeratee, Enumerator}
 import io.iteratee.modules.eitherT._
