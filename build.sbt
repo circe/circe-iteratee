@@ -13,8 +13,8 @@ val compilerOptions = Seq(
   "-Xfuture"
 )
 
-val circeVersion = "0.9.0-M1"
-val iterateeVersion = "0.13.0"
+val circeVersion = "0.9.0-M2"
+val iterateeVersion = "0.15.0"
 val previousCirceIterateeVersion = "0.8.0"
 
 val baseSettings = Seq(
