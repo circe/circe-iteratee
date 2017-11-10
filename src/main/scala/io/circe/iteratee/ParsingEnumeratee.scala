@@ -1,4 +1,4 @@
-package io.circe.streaming
+package io.circe.iteratee
 
 import _root_.jawn.{ AsyncParser, ParseException }
 import cats.ApplicativeError
@@ -10,7 +10,7 @@ import io.circe.jawn.CirceSupportParser
 import io.iteratee.Enumeratee
 import io.iteratee.internal.Step
 
-private[streaming] abstract class ParsingEnumeratee[F[_], S](implicit F: ApplicativeError[F, Throwable])
+private[iteratee] abstract class ParsingEnumeratee[F[_], S](implicit F: ApplicativeError[F, Throwable])
   extends Enumeratee[F, S, Json] {
 
   protected[this] def parsingMode: AsyncParser.Mode
