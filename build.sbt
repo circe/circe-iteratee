@@ -10,20 +10,16 @@ val compilerOptions = Seq(
   "-Yno-adapted-args",
   "-Ywarn-dead-code",
   "-Ywarn-numeric-widen",
+  "-Ywarn-unused-import",
   "-Xfuture"
 )
 
-val circeVersion = "0.9.3"
+val circeVersion = "0.10.0"
 val iterateeVersion = "0.18.0"
-val previousCirceIterateeVersion = "0.9.0"
+val previousCirceIterateeVersion = "0.10.0"
 
 val baseSettings = Seq(
-  scalacOptions ++= compilerOptions ++ (
-    CrossVersion.partialVersion(scalaVersion.value) match {
-      case Some((2, p)) if p >= 11 => Seq("-Ywarn-unused-import")
-      case _ => Nil
-    }
-  ),
+  scalacOptions ++= compilerOptions,
   scalacOptions in (Compile, console) ~= {
     _.filterNot(Set("-Ywarn-unused-import"))
   },
@@ -31,7 +27,7 @@ val baseSettings = Seq(
     _.filterNot(Set("-Ywarn-unused-import"))
   },
   coverageHighlighting := true,
-  coverageScalacPluginVersion := "1.3.0",
+  coverageScalacPluginVersion := "1.3.1",
   (scalastyleSources in Compile) ++= (unmanagedSourceDirectories in Compile).value
 )
 
@@ -47,7 +43,7 @@ val iteratee = project.in(file("."))
   libraryDependencies ++= Seq(
     "io.iteratee" %% "iteratee-core" % iterateeVersion,
     "io.circe" %% "circe-jawn" % circeVersion,
-    "io.circe" %% "circe-testing" % circeVersion % "test"
+    "io.circe" %% "circe-testing" % circeVersion % Test
   ),
   ghpagesNoJekyll := true,
   docMappingsApiDir := "api",
