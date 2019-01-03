@@ -1,9 +1,9 @@
 package io.circe
 
-import _root_.jawn.{ AsyncParser, ParseException }
 import cats.{ ApplicativeError, MonadError }
 import io.circe.jawn.CirceSupportParser
 import io.iteratee.{ Enumeratee, Enumerator }
+import org.typelevel.jawn.{ AsyncParser, ParseException }
 
 package object iteratee {
 
