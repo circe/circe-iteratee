@@ -1,6 +1,5 @@
 package io.circe.iteratee
 
-import _root_.jawn.{ AsyncParser, ParseException }
 import cats.ApplicativeError
 import cats.instances.either._
 import cats.instances.list._
@@ -9,6 +8,7 @@ import io.circe.{ Json, ParsingFailure }
 import io.circe.jawn.CirceSupportParser
 import io.iteratee.Enumeratee
 import io.iteratee.internal.Step
+import org.typelevel.jawn.{ AsyncParser, ParseException }
 
 private[iteratee] abstract class ParsingEnumeratee[F[_], S](implicit F: ApplicativeError[F, Throwable])
   extends Enumeratee[F, S, Json] {
