@@ -46,7 +46,7 @@ package object iteratee {
                                 (implicit F: ApplicativeError[F, Throwable]): Enumeratee[F, String, Json] = {
     new ParsingEnumeratee[F, String] {
       protected[this] final def parseWith(p: AsyncParser[Json])(in: String): Either[ParseException, Seq[Json]] =
-        p.absorb(in)(CirceSupportParser.facade)
+        p.absorb(in)(CirceSupportParser.facade).right.map(_.toSeq)
 
       protected[this] val parsingMode: AsyncParser.Mode = mode
     }
@@ -56,7 +56,7 @@ package object iteratee {
                               (implicit F: ApplicativeError[F, Throwable]): Enumeratee[F, Array[Byte], Json] =
     new ParsingEnumeratee[F, Array[Byte]] {
       protected[this] final def parseWith(p: AsyncParser[Json])(in: Array[Byte]): Either[ParseException, Seq[Json]] =
-        p.absorb(in)(CirceSupportParser.facade)
+        p.absorb(in)(CirceSupportParser.facade).right.map(_.toSeq)
 
       protected[this] val parsingMode: AsyncParser.Mode = mode
     }

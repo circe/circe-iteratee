@@ -25,7 +25,7 @@ private[iteratee] abstract class ParsingEnumeratee[F[_], S](implicit F: Applicat
     new Step.Cont[F, S, Step[F, Json, A]] {
       final def run: F[Step[F, Json, A]] = p.finish()(CirceSupportParser.facade) match {
         case Left(error) => F.raiseError(ParsingFailure(error.getMessage, error))
-        case Right(js) => step.feed(js)
+        case Right(js) => step.feed(js.toSeq)
       }
       final def feedEl(e: S): F[Step[F, S, Step[F, Json, A]]] = parseWith(p)(e) match {
         case Left(error) => F.raiseError(ParsingFailure(error.getMessage, error))
