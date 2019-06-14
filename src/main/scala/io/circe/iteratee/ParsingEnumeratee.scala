@@ -11,7 +11,7 @@ import io.iteratee.internal.Step
 import org.typelevel.jawn.{ AsyncParser, ParseException }
 
 private[iteratee] abstract class ParsingEnumeratee[F[_], S](implicit F: ApplicativeError[F, Throwable])
-  extends Enumeratee[F, S, Json] {
+    extends Enumeratee[F, S, Json] {
 
   protected[this] def parsingMode: AsyncParser.Mode
 
@@ -25,17 +25,17 @@ private[iteratee] abstract class ParsingEnumeratee[F[_], S](implicit F: Applicat
     new Step.Cont[F, S, Step[F, Json, A]] {
       final def run: F[Step[F, Json, A]] = p.finish()(CirceSupportParser.facade) match {
         case Left(error) => F.raiseError(ParsingFailure(error.getMessage, error))
-        case Right(js) => step.feed(js.toSeq)
+        case Right(js)   => step.feed(js.toSeq)
       }
       final def feedEl(e: S): F[Step[F, S, Step[F, Json, A]]] = parseWith(p)(e) match {
         case Left(error) => F.raiseError(ParsingFailure(error.getMessage, error))
-        case Right(js) => F.map(step.feed(js))(doneOrLoop[A](p))
+        case Right(js)   => F.map(step.feed(js))(doneOrLoop[A](p))
       }
       type Result[A] = Either[ParseException, A]
       final protected def feedNonEmpty(chunk: Seq[S]): F[Step[F, S, Step[F, Json, A]]] =
         chunk.toList.traverse[Result, Seq[Json]](parseWith(p)) match {
           case Left(error) => F.raiseError(ParsingFailure(error.getMessage, error))
-          case Right(js) => F.map(step.feed(js.flatten(Predef.identity)))(doneOrLoop[A](p))
+          case Right(js)   => F.map(step.feed(js.flatten(Predef.identity)))(doneOrLoop[A](p))
         }
     }
 

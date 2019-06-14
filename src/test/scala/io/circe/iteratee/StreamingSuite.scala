@@ -5,7 +5,7 @@ import cats.data.EitherT
 import io.circe._
 import io.circe.iteratee.examples.Foo
 import io.circe.syntax._
-import io.iteratee.{Enumeratee, Enumerator}
+import io.iteratee.{ Enumeratee, Enumerator }
 import io.iteratee.modules.eitherT._
 import org.typelevel.jawn.AsyncParser
 
@@ -44,14 +44,16 @@ class StreamingSuite extends CirceSuite {
   }
 
   "byteStreamParser" should "parse bytes delimeted by new lines" in {
-    testParser(AsyncParser.ValueStream,  stringToBytes.andThen(byteStreamParser))
+    testParser(AsyncParser.ValueStream, stringToBytes.andThen(byteStreamParser))
   }
 
   "decoder" should "decode enumerated JSON values" in forAll { (fooStream: Stream[Foo], fooVector: Vector[Foo]) =>
     val enumerator = serializeFoos(AsyncParser.UnwrapArray, enumerateFoos(fooStream, fooVector))
     val foos = fooStream ++ fooVector
 
-    assert(enumerator.through(stringArrayParser).through(decoder[Result, Foo]).toVector.value.value === Right(foos.toVector))
+    assert(
+      enumerator.through(stringArrayParser).through(decoder[Result, Foo]).toVector.value.value === Right(foos.toVector)
+    )
   }
 
   private def testParser(mode: AsyncParser.Mode, through: Enumeratee[Result, String, Json]) = {
