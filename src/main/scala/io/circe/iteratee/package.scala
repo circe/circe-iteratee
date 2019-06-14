@@ -6,6 +6,7 @@ import io.iteratee.{ Enumeratee, Enumerator }
 import org.typelevel.jawn.{ AsyncParser, ParseException }
 
 package object iteratee {
+  private[this] val supportParser: CirceSupportParser = new CirceSupportParser(None, true)
 
   /**
    * String parser of JSON values wrapped in a single array
@@ -46,9 +47,9 @@ package object iteratee {
   private def stringParser[F[_]](
     mode: AsyncParser.Mode
   )(implicit F: ApplicativeError[F, Throwable]): Enumeratee[F, String, Json] = {
-    new ParsingEnumeratee[F, String] {
+    new ParsingEnumeratee[F, String](supportParser) {
       protected[this] final def parseWith(p: AsyncParser[Json])(in: String): Either[ParseException, Seq[Json]] =
-        p.absorb(in)(CirceSupportParser.facade).right.map(_.toSeq)
+        p.absorb(in)(supportParser.facade).right.map(_.toSeq)
 
       protected[this] val parsingMode: AsyncParser.Mode = mode
     }
@@ -57,9 +58,9 @@ package object iteratee {
   private def byteParser[F[_]](
     mode: AsyncParser.Mode
   )(implicit F: ApplicativeError[F, Throwable]): Enumeratee[F, Array[Byte], Json] =
-    new ParsingEnumeratee[F, Array[Byte]] {
+    new ParsingEnumeratee[F, Array[Byte]](supportParser) {
       protected[this] final def parseWith(p: AsyncParser[Json])(in: Array[Byte]): Either[ParseException, Seq[Json]] =
-        p.absorb(in)(CirceSupportParser.facade).right.map(_.toSeq)
+        p.absorb(in)(supportParser.facade).right.map(_.toSeq)
 
       protected[this] val parsingMode: AsyncParser.Mode = mode
     }
