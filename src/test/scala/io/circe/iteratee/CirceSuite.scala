@@ -10,11 +10,15 @@ import org.typelevel.discipline.Laws
 import scala.language.implicitConversions
 
 /**
-  * An opinionated stack of traits to improve consistency and reduce boilerplate in circe tests.
-  */
-trait CirceSuite extends AnyFlatSpec with ScalaCheckDrivenPropertyChecks
-  with AllInstances with AllSyntax
-  with ArbitraryInstances with EqInstances {
+ * An opinionated stack of traits to improve consistency and reduce boilerplate in circe tests.
+ */
+trait CirceSuite
+    extends AnyFlatSpec
+    with ScalaCheckDrivenPropertyChecks
+    with AllInstances
+    with AllSyntax
+    with ArbitraryInstances
+    with EqInstances {
 
   implicit lazy val eqThrowable: Eq[Throwable] = Eq.fromUniversalEquals
 

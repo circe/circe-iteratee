@@ -3,7 +3,7 @@ package io.circe.iteratee
 import cats._
 import cats.implicits._
 import io.circe.{ Decoder, DecodingFailure, Encoder, Json }
-import org.scalacheck.{Arbitrary, Gen}
+import org.scalacheck.{ Arbitrary, Gen }
 
 package examples {
 
@@ -77,7 +77,7 @@ package examples {
 
     val encodeFoo: Encoder[Foo] = Encoder.instance {
       case bar @ Bar(_, _) => Json.obj("Bar" -> Bar.encodeBar(bar))
-      case baz @ Baz(_) => Json.obj("Baz" -> Baz.encodeBaz(baz))
+      case baz @ Baz(_)    => Json.obj("Baz" -> Baz.encodeBaz(baz))
       case bam @ Bam(_, _) => Json.obj("Bam" -> Bam.encodeBam(bam))
     }
 
@@ -86,7 +86,7 @@ package examples {
         case Some(Vector("Bar")) => c.get("Bar")(Bar.decodeBar.widen)
         case Some(Vector("Baz")) => c.get("Baz")(Baz.decodeBaz.widen)
         case Some(Vector("Bam")) => c.get("Bam")(Bam.decodeBam.widen)
-        case _ => Left(DecodingFailure("Foo", c.history))
+        case _                   => Left(DecodingFailure("Foo", c.history))
       }
     }
   }
