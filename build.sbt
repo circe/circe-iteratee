@@ -12,8 +12,8 @@ val compilerOptions = Seq(
   "-Ywarn-numeric-widen"
 )
 
-val circeVersion = "0.12.0-M1"
-val iterateeVersion = "0.19.0-M1"
+val circeVersion = "0.12.0-M3"
+val iterateeVersion = "0.19.0-M4"
 val previousCirceIterateeVersion = "0.11.0"
 
 def priorTo2_13(scalaVersion: String): Boolean =
