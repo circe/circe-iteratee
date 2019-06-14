@@ -16,6 +16,9 @@ val circeVersion = "0.12.0-M3"
 val iterateeVersion = "0.19.0-M4"
 val previousCirceIterateeVersion = "0.11.0"
 
+val scalaTestVersion = "3.1.0-SNAP13"
+val scalaTestPlusVersion = "1.0.0-SNAP8"
+
 def priorTo2_13(scalaVersion: String): Boolean =
   CrossVersion.partialVersion(scalaVersion) match {
     case Some((2, minor)) if minor < 13 => true
@@ -61,7 +64,9 @@ val iteratee = project
     libraryDependencies ++= Seq(
       "io.iteratee" %% "iteratee-core" % iterateeVersion,
       "io.circe" %% "circe-jawn" % circeVersion,
-      "io.circe" %% "circe-testing" % circeVersion % Test
+      "io.circe" %% "circe-testing" % circeVersion % Test,
+      "org.scalatest" %% "scalatest" % scalaTestVersion % Test,
+      "org.scalatestplus" %% "scalatestplus-scalacheck" % "1.0.0-SNAP8" % Test
     ),
     ghpagesNoJekyll := true,
     docMappingsApiDir := "api",
