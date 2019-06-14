@@ -2,7 +2,8 @@ organization in ThisBuild := "io.circe"
 
 val compilerOptions = Seq(
   "-deprecation",
-  "-encoding", "UTF-8",
+  "-encoding",
+  "UTF-8",
   "-feature",
   "-language:existentials",
   "-language:higherKinds",
@@ -19,18 +20,21 @@ def priorTo2_13(scalaVersion: String): Boolean =
   CrossVersion.partialVersion(scalaVersion) match {
     case Some((2, minor)) if minor < 13 => true
     case _                              => false
-}
+  }
 
 val baseSettings = Seq(
   scalacOptions ++= compilerOptions,
   scalacOptions ++= (
-    if (priorTo2_13(scalaVersion.value)) Seq(
-      "-Xfuture",
-      "-Yno-adapted-args",
-      "-Ywarn-unused-import"
-    ) else Seq(
-      "-Ywarn-unused:imports"
-    )
+    if (priorTo2_13(scalaVersion.value))
+      Seq(
+        "-Xfuture",
+        "-Yno-adapted-args",
+        "-Ywarn-unused-import"
+      )
+    else
+      Seq(
+        "-Ywarn-unused:imports"
+      )
   ),
   scalacOptions in (Compile, console) ~= {
     _.filterNot(Set("-Ywarn-unused-import"))
@@ -48,20 +52,21 @@ val allSettings = baseSettings ++ publishSettings
 
 val docMappingsApiDir = settingKey[String]("Subdirectory in site target directory for API docs")
 
-val iteratee = project.in(file("."))
-.settings(allSettings)
-.settings(
-  moduleName := "circe-iteratee",
-  mimaPreviousArtifacts := Set("io.circe" %% "circe-iteratee" % previousCirceIterateeVersion),
-  libraryDependencies ++= Seq(
-    "io.iteratee" %% "iteratee-core" % iterateeVersion,
-    "io.circe" %% "circe-jawn" % circeVersion,
-    "io.circe" %% "circe-testing" % circeVersion % Test
-  ),
-  ghpagesNoJekyll := true,
-  docMappingsApiDir := "api",
-  addMappingsToSiteDir(mappings in (Compile, packageDoc), docMappingsApiDir)
-)
+val iteratee = project
+  .in(file("."))
+  .settings(allSettings)
+  .settings(
+    moduleName := "circe-iteratee",
+    mimaPreviousArtifacts := Set("io.circe" %% "circe-iteratee" % previousCirceIterateeVersion),
+    libraryDependencies ++= Seq(
+      "io.iteratee" %% "iteratee-core" % iterateeVersion,
+      "io.circe" %% "circe-jawn" % circeVersion,
+      "io.circe" %% "circe-testing" % circeVersion % Test
+    ),
+    ghpagesNoJekyll := true,
+    docMappingsApiDir := "api",
+    addMappingsToSiteDir(mappings in (Compile, packageDoc), docMappingsApiDir)
+  )
 
 lazy val publishSettings = Seq(
   releaseCrossBuild := true,
@@ -70,18 +75,20 @@ lazy val publishSettings = Seq(
   licenses := Seq("Apache 2.0" -> url("http://www.apache.org/licenses/LICENSE-2.0")),
   publishMavenStyle := true,
   publishArtifact in Test := false,
-  pomIncludeRepository := { _ => false },
+  pomIncludeRepository := { _ =>
+    false
+  },
   publishTo := {
     val nexus = "https://oss.sonatype.org/"
     if (isSnapshot.value)
       Some("snapshots" at nexus + "content/repositories/snapshots")
     else
-      Some("releases"  at nexus + "service/local/staging/deploy/maven2")
+      Some("releases" at nexus + "service/local/staging/deploy/maven2")
   },
   /* Someday maybe Scaladoc will actually work on package object-only projects.
   autoAPIMappings := true,
   apiURL := Some(url("https://circe.github.io/circe-iteratee/api/")),
-  */
+   */
   scmInfo := Some(
     ScmInfo(
       url("https://github.com/circe/circe-iteratee"),
