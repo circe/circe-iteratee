@@ -10,20 +10,21 @@ import io.iteratee.Enumeratee
 import io.iteratee.internal.Step
 import org.typelevel.jawn.{ AsyncParser, ParseException }
 
-private[iteratee] abstract class ParsingEnumeratee[F[_], S](implicit F: ApplicativeError[F, Throwable])
-    extends Enumeratee[F, S, Json] {
+private[iteratee] abstract class ParsingEnumeratee[F[_], S](supportParser: CirceSupportParser)(
+  implicit F: ApplicativeError[F, Throwable]
+) extends Enumeratee[F, S, Json] {
 
   protected[this] def parsingMode: AsyncParser.Mode
 
   protected[this] def parseWith(parser: AsyncParser[Json])(in: S): Either[ParseException, Seq[Json]]
 
-  private[this] final def makeParser: AsyncParser[Json] = CirceSupportParser.async(
+  private[this] final def makeParser: AsyncParser[Json] = supportParser.async(
     mode = parsingMode
   )
 
   private[this] final def loop[A](p: AsyncParser[Json])(step: Step[F, Json, A]): Step[F, S, Step[F, Json, A]] =
     new Step.Cont[F, S, Step[F, Json, A]] {
-      final def run: F[Step[F, Json, A]] = p.finish()(CirceSupportParser.facade) match {
+      final def run: F[Step[F, Json, A]] = p.finish()(supportParser.facade) match {
         case Left(error) => F.raiseError(ParsingFailure(error.getMessage, error))
         case Right(js)   => step.feed(js.toSeq)
       }
