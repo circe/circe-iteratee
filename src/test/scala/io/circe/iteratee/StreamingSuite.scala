@@ -56,12 +56,11 @@ class StreamingSuite extends CirceSuite {
     )
   }
 
-  private def testParser(mode: AsyncParser.Mode, through: Enumeratee[Result, String, Json]) = {
+  private def testParser(mode: AsyncParser.Mode, through: Enumeratee[Result, String, Json]) =
     forAll { (fooStream: Stream[Foo], fooVector: Vector[Foo]) =>
       val enumerator = serializeFoos(mode, enumerateFoos(fooStream, fooVector)).through(through)
       val foos = (fooStream ++ fooVector).map(_.asJson).toVector
 
       assert(enumerator.toVector.value.value === Right(foos.toVector))
     }
-  }
 }
