@@ -64,7 +64,7 @@ val iteratee = project
       "io.circe" %% "circe-jawn" % circeVersion,
       "io.circe" %% "circe-testing" % circeVersion % Test,
       "org.scalatest" %% "scalatest" % scalaTestVersion % Test,
-      "org.scalatestplus" %% "scalatestplus-scalacheck" % "1.0.0-SNAP8" % Test
+      "org.scalatestplus" %% "scalatestplus-scalacheck" % "3.1.0.0-RC2" % Test
     ),
     ghpagesNoJekyll := true,
     docMappingsApiDir := "api",
