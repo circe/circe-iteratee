@@ -36,12 +36,11 @@ package object iteratee {
    * Enumeratee decoder from JSON to some type `A`
    */
   final def decoder[F[_], A](implicit F: MonadError[F, Throwable], decode: Decoder[A]): Enumeratee[F, Json, A] =
-    Enumeratee.flatMap(
-      json =>
-        decode(json.hcursor) match {
-          case Left(df) => Enumerator.liftM(F.raiseError(df))
-          case Right(a) => Enumerator.enumOne(a)
-        }
+    Enumeratee.flatMap(json =>
+      decode(json.hcursor) match {
+        case Left(df) => Enumerator.liftM(F.raiseError(df))
+        case Right(a) => Enumerator.enumOne(a)
+      }
     )
 
   private def stringParser[F[_]](
