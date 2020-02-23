@@ -17,7 +17,7 @@ val iterateeVersion = "0.19.0"
 val previousCirceIterateeVersion = "0.11.0"
 
 val scalaTestVersion = "3.1.1"
-val scalaTestPlusVersion = "3.1.1.0"
+val scalaTestPlusVersion = "3.1.1.1"
 
 def priorTo2_13(scalaVersion: String): Boolean =
   CrossVersion.partialVersion(scalaVersion) match {
