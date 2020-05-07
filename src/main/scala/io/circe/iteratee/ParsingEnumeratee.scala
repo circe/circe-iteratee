@@ -10,8 +10,8 @@ import io.iteratee.Enumeratee
 import io.iteratee.internal.Step
 import org.typelevel.jawn.{ AsyncParser, ParseException }
 
-private[iteratee] abstract class ParsingEnumeratee[F[_], S](supportParser: CirceSupportParser)(
-  implicit F: ApplicativeError[F, Throwable]
+private[iteratee] abstract class ParsingEnumeratee[F[_], S](supportParser: CirceSupportParser)(implicit
+  F: ApplicativeError[F, Throwable]
 ) extends Enumeratee[F, S, Json] {
 
   protected[this] def parsingMode: AsyncParser.Mode
