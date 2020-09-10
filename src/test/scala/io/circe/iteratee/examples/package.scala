@@ -32,8 +32,8 @@ package examples {
     )
 
     val decodeBar: Decoder[Bar] = Decoder.forProduct2("i", "s")(Bar.apply)
-    val encodeBar: Encoder[Bar] = Encoder.forProduct2("i", "s") {
-      case Bar(i, s) => (i, s)
+    val encodeBar: Encoder[Bar] = Encoder.forProduct2("i", "s") { case Bar(i, s) =>
+      (i, s)
     }
   }
 
@@ -44,8 +44,8 @@ package examples {
     )
 
     implicit val decodeBaz: Decoder[Baz] = Decoder[List[String]].map(Baz(_))
-    implicit val encodeBaz: Encoder[Baz] = Encoder.instance {
-      case Baz(xs) => Json.fromValues(xs.map(Json.fromString))
+    implicit val encodeBaz: Encoder[Baz] = Encoder.instance { case Baz(xs) =>
+      Json.fromValues(xs.map(Json.fromString))
     }
   }
 
@@ -59,8 +59,8 @@ package examples {
     )
 
     val decodeBam: Decoder[Bam] = Decoder.forProduct2("w", "d")(Bam.apply)(Wub.decodeWub, implicitly)
-    val encodeBam: Encoder[Bam] = Encoder.forProduct2[Bam, Wub, Double]("w", "d") {
-      case Bam(w, d) => (w, d)
+    val encodeBam: Encoder[Bam] = Encoder.forProduct2[Bam, Wub, Double]("w", "d") { case Bam(w, d) =>
+      (w, d)
     }(Wub.encodeWub, implicitly)
   }
 
