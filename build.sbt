@@ -16,7 +16,7 @@ val circeVersion = "0.13.0"
 val iterateeVersion = "0.19.0"
 val previousCirceIterateeVersion = "0.11.0"
 
-val scalaTestVersion = "3.2.3"
+val scalaTestVersion = "3.2.5"
 val scalaTestPlusVersion = "3.2.2.0"
 
 def priorTo2_13(scalaVersion: String): Boolean =
