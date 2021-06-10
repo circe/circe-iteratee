@@ -13,7 +13,7 @@ val compilerOptions = Seq(
 )
 
 val circeVersion = "0.14.1"
-val iterateeVersion = "0.19.0"
+val iterateeVersion = "0.20.0"
 val previousCirceIterateeVersion = "0.11.0"
 
 val scalaTestVersion = "3.2.9"
