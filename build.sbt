@@ -63,7 +63,10 @@ val baseSettings = Seq(
     _.filterNot(Set("-Ywarn-unused-import"))
   },
   coverageHighlighting := true,
-  (Compile / scalastyleSources) ++= (Compile / unmanagedSourceDirectories).value
+  coverageEnabled := (
+    if (!scalaVersion.value.startsWith("2.13")) false else coverageEnabled.value
+  ),
+  Compile / scalastyleSources ++= (Compile / unmanagedSourceDirectories).value
 )
 
 val allSettings = baseSettings ++ publishSettings
