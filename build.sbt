@@ -1,5 +1,5 @@
 ThisBuild / organization := "io.circe"
-ThisBuild / crossScalaVersions := Seq("2.12.14", "2.13.6", "3.0.2")
+ThisBuild / crossScalaVersions := Seq("2.12.15", "2.13.6", "3.0.2")
 ThisBuild / githubWorkflowJavaVersions := Seq("adopt@1.8")
 ThisBuild / githubWorkflowPublishTargetBranches := Nil
 ThisBuild / githubWorkflowBuild := Seq(
@@ -33,8 +33,8 @@ val circeVersion = "0.14.1"
 val iterateeVersion = "0.20.0"
 val previousCirceIterateeVersion = "0.12.0"
 
-val scalaTestVersion = "3.2.10"
-val scalaTestPlusVersion = "3.2.9.0"
+val scalaTestVersion = "3.2.9"
+val scalaTestPlusVersion = "3.2.10.0"
 
 def priorTo2_13(scalaVersion: String): Boolean =
   CrossVersion.partialVersion(scalaVersion) match {
