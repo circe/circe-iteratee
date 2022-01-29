@@ -36,7 +36,6 @@ val previousCirceIterateeVersion = "0.12.0"
 val scalaTestVersion = "3.2.11"
 val scalaTestPlusVersion = "3.2.11.0"
 
-
 def priorTo2_13(scalaVersion: String): Boolean =
   CrossVersion.partialVersion(scalaVersion) match {
     case Some((2, minor)) if minor < 13 => true
