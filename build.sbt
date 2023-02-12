@@ -29,7 +29,7 @@ val compilerOptions = Seq(
   "-Ywarn-numeric-widen"
 )
 
-val circeVersion = "0.14.1"
+val circeVersion = "0.14.4"
 val iterateeVersion = "0.20.0"
 val previousCirceIterateeVersion = "0.12.0"
 
