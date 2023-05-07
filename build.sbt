@@ -34,7 +34,7 @@ val iterateeVersion = "0.20.0"
 val previousCirceIterateeVersion = "0.12.0"
 
 val scalaTestVersion = "3.2.11"
-val scalaTestPlusVersion = "3.2.11.0"
+val scalaTestPlusVersion = "3.2.14.0"
 
 def priorTo2_13(scalaVersion: String): Boolean =
   CrossVersion.partialVersion(scalaVersion) match {
@@ -84,7 +84,7 @@ val iteratee = project
       "io.circe" %% "circe-jawn" % circeVersion,
       "io.circe" %% "circe-testing" % circeVersion % Test,
       "org.scalatest" %% "scalatest" % scalaTestVersion % Test,
-      "org.scalatestplus" %% "scalacheck-1-15" % scalaTestPlusVersion % Test
+      "org.scalatestplus" %% "scalacheck-1-16" % scalaTestPlusVersion % Test
     ),
     ghpagesNoJekyll := true,
     docMappingsApiDir := "api",
